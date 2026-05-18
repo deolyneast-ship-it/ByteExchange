@@ -155,8 +155,7 @@ ByteExchange/
 
 ### 1️⃣ Clone Repository
 
-- ```bash
- git clone <repository-url>cd ByteExchange
+ ```bash git clone <repository-url>cd ByteExchange
 ---
 ###2️⃣ Run with Docker
 - docker-compose up --build
