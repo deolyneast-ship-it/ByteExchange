@@ -158,29 +158,29 @@ ByteExchange/
 ```bash
 git clone <repository-url>
 cd ByteExchange
-
+---
 2️⃣ Run with Docker
 docker-compose up --build
-
+---
 3️⃣ Run Backend
 cd backend
 ./mvnw spring-boot:run
-
+---
 4️⃣ Run Frontend
 cd frontend
 npm install
 npm run dev
-
+---
 🧪 Running Tests
 ./mvnw test
-
+---
 📊 Monitoring
 | Tool       | URL                                            |
 | ---------- | ---------------------------------------------- |
 | Grafana    | [http://localhost:3000](http://localhost:3000) |
 | Prometheus | [http://localhost:9090](http://localhost:9090) |
 
-
+---
 🐳 Docker Support
 
 ByteExchange supports containerized deployment using:
@@ -193,7 +193,7 @@ Disclaimer: ByteExchange does not facilitate real cryptocurrency trading or fina
 
 
 This version looks professional for GitHub and matches your project brief while using the name **ByteExchange** instead of OpenEx. I
-
+---
 📅 Development Roadmap
 Week 1 – Backend Foundations
 REST API development
@@ -215,12 +215,12 @@ Docker containerization
 GitHub Actions CI/CD
 API documentation
 Final project demo
-
+---
 👥 Contributors
 
 Team ByteExchange
 
-
+---
 📄 License
 
 This project is developed for educational purposes and simulation only.
