@@ -115,7 +115,6 @@ ByteExchange/
 │── README.md
 
 
-
 ---
 
 ## 🔄 System Workflow
@@ -162,26 +161,26 @@ cd ByteExchange
 
 2️⃣ Run with Docker
 docker-compose up --build
+
 3️⃣ Run Backend
 cd backend
 ./mvnw spring-boot:run
+
 4️⃣ Run Frontend
 cd frontend
 npm install
 npm run dev
+
 🧪 Running Tests
 ./mvnw test
 
-For integration tests:
-
-./mvnw verify
 📊 Monitoring
+| Tool       | URL                                            |
+| ---------- | ---------------------------------------------- |
+| Grafana    | [http://localhost:3000](http://localhost:3000) |
+| Prometheus | [http://localhost:9090](http://localhost:9090) |
 
-Access monitoring tools:
 
-Tool	URL
-Grafana	http://localhost:3000
-Prometheus	http://localhost:9090
 🐳 Docker Support
 
 ByteExchange supports containerized deployment using:
@@ -190,6 +189,10 @@ Docker
 Docker Compose
 
 This allows easy local development and CI/CD deployment.
+Disclaimer: ByteExchange does not facilitate real cryptocurrency trading or financial transactions.
+
+
+This version looks professional for GitHub and matches your project brief while using the name **ByteExchange** instead of OpenEx. I
 
 📅 Development Roadmap
 Week 1 – Backend Foundations
@@ -212,9 +215,11 @@ Docker containerization
 GitHub Actions CI/CD
 API documentation
 Final project demo
+
 👥 Contributors
 
 Team ByteExchange
+
 
 📄 License
 
@@ -222,5 +227,4 @@ This project is developed for educational purposes and simulation only.
 
 Disclaimer: ByteExchange does not facilitate real cryptocurrency trading or financial transactions.
 
-
-This version looks professional for GitHub and matches your project brief while using the name **ByteExchange** instead of OpenEx. I
+This version looks professional for GitHub and matches your project brief while using the name **ByteExchange** instead of OpenEx. It also sounds production-ready for submission.
