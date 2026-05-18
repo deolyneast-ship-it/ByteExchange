@@ -91,3 +91,136 @@ OR
 ---
 
 ## 📂 Project Structure
+ByteExchange/
+│── backend/
+│ ├── src/
+│ ├── controllers/
+│ ├── services/
+│ ├── repositories/
+│ ├── models/
+│ ├── websocket/
+│ └── matching-engine/
+│
+│── frontend/
+│ ├── src/
+│ ├── components/
+│ ├── pages/
+│ ├── charts/
+│ └── services/
+│
+│── docker/
+│── docs/
+│── tests/
+│── docker-compose.yml
+│── README.md
+
+
+
+---
+
+## 🔄 System Workflow
+
+1. User logs in or creates a simulated wallet.
+2. User deposits virtual USD/BTC funds.
+3. User places **market** or **limit** orders.
+4. Matching engine processes orders.
+5. Trade executes if conditions match.
+6. Wallet balances update.
+7. Live updates stream through WebSocket.
+8. Dashboard reflects trading activity in real time.
+
+---
+
+## 🔌 API Features
+
+### Wallet APIs
+- Create wallet
+- Get balance
+- Deposit simulated funds
+- Withdraw simulated funds
+
+### Trading APIs
+- Place order
+- Cancel order
+- Get open orders
+- View trade history
+
+### Market APIs
+- Order book data
+- Price updates
+- Market trades
+
+---
+
+## 🖥️ Running the Project
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone <repository-url>
+cd ByteExchange
+
+2️⃣ Run with Docker
+docker-compose up --build
+3️⃣ Run Backend
+cd backend
+./mvnw spring-boot:run
+4️⃣ Run Frontend
+cd frontend
+npm install
+npm run dev
+🧪 Running Tests
+./mvnw test
+
+For integration tests:
+
+./mvnw verify
+📊 Monitoring
+
+Access monitoring tools:
+
+Tool	URL
+Grafana	http://localhost:3000
+Prometheus	http://localhost:9090
+🐳 Docker Support
+
+ByteExchange supports containerized deployment using:
+
+Docker
+Docker Compose
+
+This allows easy local development and CI/CD deployment.
+
+📅 Development Roadmap
+Week 1 – Backend Foundations
+REST API development
+WebSocket setup
+PostgreSQL & Redis integration
+Wallet and trading services
+Week 2 – Frontend Development
+React dashboard
+Chart.js integration
+WebSocket connectivity
+API integration
+Week 3 – Testing & Monitoring
+JUnit & Mockito
+Testcontainers
+Prometheus + Grafana
+Load testing
+Week 4 – Deployment
+Docker containerization
+GitHub Actions CI/CD
+API documentation
+Final project demo
+👥 Contributors
+
+Team ByteExchange
+
+📄 License
+
+This project is developed for educational purposes and simulation only.
+
+Disclaimer: ByteExchange does not facilitate real cryptocurrency trading or financial transactions.
+
+
+This version looks professional for GitHub and matches your project brief while using the name **ByteExchange** instead of OpenEx. I
