@@ -155,24 +155,24 @@ ByteExchange/
 
 ### 1️⃣ Clone Repository
 
-```bash
-git clone <repository-url>
-cd ByteExchange
+- ```bash
+ -git clone <repository-url>
+- cd ByteExchange
 ---
 ###2️⃣ Run with Docker
-docker-compose up --build
+- docker-compose up --build
 ---
 ###3️⃣ Run Backend
-cd backend
-./mvnw spring-boot:run
+- cd backend
+- ./mvnw spring-boot:run
 ---
 ###4️⃣ Run Frontend
-cd frontend
-npm install
-npm run dev
+- cd frontend
+- npm install
+- npm run dev
 ---
 ##🧪 Running Tests
-./mvnw test
+- ./mvnw test
 ---
 📊 Monitoring
 | Tool       | URL                                            |
@@ -183,48 +183,48 @@ npm run dev
 ---
 ##🐳 Docker Support
 
-ByteExchange supports containerized deployment using:
+- ByteExchange supports containerized deployment using:
 
-Docker
-Docker Compose
+- Docker
+- Docker Compose
 
-This allows easy local development and CI/CD deployment.
-Disclaimer: ByteExchange does not facilitate real cryptocurrency trading or financial transactions.
+- This allows easy local development and CI/CD deployment.
+- Disclaimer: ByteExchange does not facilitate real cryptocurrency trading or financial transactions.
 
 
 This version looks professional for GitHub and matches your project brief while using the name **ByteExchange** instead of OpenEx. I
 ---
 ##📅 Development Roadmap
-Week 1 – Backend Foundations
-REST API development
-WebSocket setup
-PostgreSQL & Redis integration
-Wallet and trading services
-Week 2 – Frontend Development
-React dashboard
-Chart.js integration
-WebSocket connectivity
-API integration
-Week 3 – Testing & Monitoring
-JUnit & Mockito
-Testcontainers
-Prometheus + Grafana
-Load testing
-Week 4 – Deployment
-Docker containerization
-GitHub Actions CI/CD
-API documentation
-Final project demo
+- Week 1 – Backend Foundations
+- REST API development
+- WebSocket setup
+- PostgreSQL & Redis integration
+- Wallet and trading services
+- Week 2 – Frontend Development
+- React dashboard
+- Chart.js integration
+- WebSocket connectivity
+- API integration
+- Week 3 – Testing & Monitoring
+- JUnit & Mockito
+- Testcontainers
+- Prometheus + Grafana
+- Load testing
+- Week 4 – Deployment
+- Docker containerization
+- GitHub Actions CI/CD
+- API documentation
+- Final project demo
 ---
 ##👥 Contributors
 
-Team ByteExchange
+- Team ByteExchange
 
 ---
 ##📄 License
 
-This project is developed for educational purposes and simulation only.
+- This project is developed for educational purposes and simulation only.
 
-Disclaimer: ByteExchange does not facilitate real cryptocurrency trading or financial transactions.
+- Disclaimer: ByteExchange does not facilitate real cryptocurrency trading or financial transactions.
 
-This version looks professional for GitHub and matches your project brief while using the name **ByteExchange** instead of OpenEx. It also sounds production-ready for submission.
+- This version looks professional for GitHub and matches your project brief while using the name **ByteExchange** instead of OpenEx. It also sounds production-ready for submission.
