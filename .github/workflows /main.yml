@@ -1,0 +1,180 @@
+name: ByteExchange Main Branch Deployment
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  BACKEND_IMAGE: byteexchange-backend
+  FRONTEND_IMAGE: byteexchange-frontend
+
+jobs:
+  build-test-and-push:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: byteexchange
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # -----------------------------
+      # JAVA SETUP
+      # -----------------------------
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Maven Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('backend/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven
+
+      # -----------------------------
+      # BACKEND TESTING
+      # -----------------------------
+      - name: Run Backend Tests
+        working-directory: ./backend
+        run: mvn clean verify
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/byteexchange
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: postgres
+          SPRING_REDIS_HOST: localhost
+          SPRING_REDIS_PORT: 6379
+
+      # -----------------------------
+      # FRONTEND TESTING
+      # -----------------------------
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Frontend Dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Build Frontend
+        working-directory: ./frontend
+        run: npm run build
+
+      # -----------------------------
+      # DOCKER LOGIN
+      # -----------------------------
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # -----------------------------
+      # BUILD & PUSH BACKEND IMAGE
+      # -----------------------------
+      - name: Build and Push Backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/byteexchange-backend:latest
+            ${{ secrets.DOCKER_USERNAME }}/byteexchange-backend:${{ github.sha }}
+
+      # -----------------------------
+      # BUILD & PUSH FRONTEND IMAGE
+      # -----------------------------
+      - name: Build and Push Frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/byteexchange-frontend:latest
+            ${{ secrets.DOCKER_USERNAME }}/byteexchange-frontend:${{ github.sha }}
+
+  deploy-to-openshift:
+    needs: build-test-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # -----------------------------
+      # LOGIN TO OPENSHIFT
+      # -----------------------------
+      - name: Authenticate with OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+          openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+
+      # -----------------------------
+      # DEPLOY KUBERNETES FILES
+      # -----------------------------
+      - name: Deploy Infrastructure
+        run: |
+          oc apply -f k8s/namespace.yaml
+          oc apply -f k8s/configmap.yaml
+          oc apply -f k8s/secrets.yaml
+
+      - name: Deploy Databases
+        run: |
+          oc apply -f k8s/postgres/
+          oc apply -f k8s/redis/
+
+      - name: Deploy Backend Services
+        run: |
+          oc apply -f k8s/backend/
+
+      - name: Deploy Frontend Services
+        run: |
+          oc apply -f k8s/frontend/
+
+      - name: Deploy Monitoring Stack
+        run: |
+          oc apply -f k8s/prometheus/
+          oc apply -f k8s/grafana/
+
+      # -----------------------------
+      # REFRESH PODS
+      # -----------------------------
+      - name: Restart Deployments
+        run: |
+          oc rollout restart deployment/backend -n byteexchange
+          oc rollout restart deployment/frontend -n byteexchange
+          oc rollout restart deployment/postgres -n byteexchange
+          oc rollout restart deployment/redis -n byteexchange
+
+      # -----------------------------
+      # VERIFY DEPLOYMENT
+      # -----------------------------
+      - name: Verify Rollout Status
+        run: |
+          oc rollout status deployment/backend -n byteexchange
+          oc rollout status deployment/frontend -n byteexchange
